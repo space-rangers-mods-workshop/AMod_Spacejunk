@@ -6,3 +6,6 @@
 # and the --lang build output. The source-transformation patch scripts are
 # tracked in patches/ (they are the reproducible record of the fixes).
 tmp/
+
+# python tool cache
+.ruff_cache/
