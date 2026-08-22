@@ -93,6 +93,10 @@ acquire:
       final fix (TVar global + sort_key_array input) → CONFIRMED working at runtime.
       Also fixed the separate latent Center-button bug: PressCodes.Center passed the input as 'id' but
       Functions.<objtype>.Center reads `object_id`; now passes 'object_id'.
+      Reproduce (exact old→new substitutions, byte-level cp1251, count asserts): run
+      `patches/patch_readback.py` on a fresh copy of denballakh's original src/Lang_spacejunk.txt
+      (after `patches/strip_sft_comments.py`). On the already-fixed committed src/ its asserts fail
+      by design — it is a reproducibility record, not a re-runnable now.
     command: ""
     date: 2026-08-22
 
@@ -131,6 +135,7 @@ acquire:
       lines were already absent from the built dat; deleting them keeps the readable source clean.
       Versioning is handled by git. Useful doc comments (the _ObjType template contract lines such as
       `object - объект; result - ...`) are kept.
+      Reproduce: run `patches/strip_sft_comments.py` (cp1251-preserving removal of `0=//SFT(` lines).
     command: ""
     date: 2026-08-22
 

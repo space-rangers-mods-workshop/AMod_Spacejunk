@@ -3,7 +3,6 @@
 *.log
 
 # one-off throwaway artifacts: intermediate lang dumps, decomp fragments,
-# and the already-applied byte-level patch scripts (their effect is
-# documented in AMod_Spacejunk.yaml acquire steps and workshop/finds.md)
+# and the --lang build output. The source-transformation patch scripts are
+# tracked in patches/ (they are the reproducible record of the fixes).
 tmp/
-tmp_patch_readback.py
