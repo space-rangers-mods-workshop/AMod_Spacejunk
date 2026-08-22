@@ -1,3 +1,21 @@
+Bm ^{
+    FormStarMap ^{
+        ItemCenterA=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\ItemCenterA.gi
+        ItemCenterD=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\ItemCenterD.gi
+        ItemCenterN=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\ItemCenterN.gi
+        OpenedPanel=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\OpenedPanel.gi
+        OpenedPanelButton=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\OpenedPanelButton.gi
+        sjPageLeftA=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageLeftA.gi
+        sjPageLeftD=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageLeftD.gi
+        sjPageLeftH=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageLeftH.gi
+        sjPageLeftN=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageLeftN.gi
+        sjPageRightA=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageRightA.gi
+        sjPageRightD=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageRightD.gi
+        sjPageRightH=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageRightH.gi
+        sjPageRightN=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPageRightN.gi
+        sjPanelCenter=Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\sjPanelCenter.gi
+    }
+}
 Script ^{
     mod_spacejunk=Mods\Miscellaneous\AMod_Spacejunk\DATA\Script\mod_spacejunk.scr
 }

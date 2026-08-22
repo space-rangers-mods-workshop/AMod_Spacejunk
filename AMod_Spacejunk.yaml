@@ -168,13 +168,16 @@ acquire:
       Assemble mod/ from the readable sources. Run from workshop/AMod_Spacejunk:
       ..\..\.venv\Scripts\python.exe build_spacejunk.py
       Layout (conventions from installed game reference mods):
-        mod/ModuleInfo.txt          UTF-16 LE BOM, Dependence=LEOGraphicsMod
+        mod/ModuleInfo.txt          UTF-16 LE BOM (no Dependence; panel textures bundled)
         mod/CFG/Main.dat            from src/Main_spacejunk.txt  fmt=HDMain  unsigned (has Data.Script header)
-        mod/CFG/CacheData.dat       from src/CacheData_spacejunk.txt fmt=HDCache  unsigned
+        mod/CFG/CacheData.dat       from src/CacheData_spacejunk.txt fmt=HDCache  unsigned (Bm.FormStarMap +
+                                    Script blocks)
         mod/CFG/Rus/Lang.dat        from src/Lang_spacejunk.txt  fmt=HDMain  signed (Script.AMod_Spacejunk logic)
         mod/CFG/Eng/Lang.dat        same content as Rus (Script block is language-independent; ModuleInfo
                                     declares Languages=Rus,Eng, and SRHD loads Lang.dat per active language)
         mod/Data/Script/mod_spacejunk.scr   compiled stub (from Spacejunk.rson)
+        mod/Data/FormStarMap/*.gi   the 14 panel textures (Bm.FormStarMap.*), bundled so the mod runs without
+                                    LEOGraphicsMod; build fails if any are missing
       Prerequisite: compile the stub via SRHD-XenoModKit (RScript compiler installed by setup-tools.ps1):
         ..\SRHD-XenoModKit\srhd.cmd script build src\Spacejunk.rson --scr mod\Data\Script\mod_spacejunk.scr ^
           --lang tmp\spacejunk_lang.txt --tools-root ..\..\workshop --overwrite
@@ -209,22 +212,22 @@ acquire:
       && python -B srhd.py dat decode ..\LEOGraphicsMod\mod\CFG\CacheData.dat ..\LEOGraphicsMod\src\CacheData.txt
     date: 2026-08-22
 
-  # author ModuleInfo.txt for the CURRENT variant — keeps Dependence=LEOGraphicsMod (runtime test)
+  # author ModuleInfo.txt for the CURRENT variant — no Dependence (textures bundled)
   - ref: ModuleInfo.txt
     note: >-
-      Author ModuleInfo.txt in mod/ for the current (un-merged) variant, verified at runtime against these sources:
-      KEEP Dependence=LEOGraphicsMod (the mod still relies on the separately-installed LEOGraphicsMod; dropping it is
-      the pending merge below), Section=Разное/SectionEng=Miscellaneous, Priority=1, Languages=Rus,Eng, and Rus/Eng
-      descriptions. Author lists the actual authors of this mod: Huk (author of AMod_Spacejunk, per museum
-      ModuleInfo.txt) → denballakh (published Space-Rangers-Mods-Sources, our merge base) → LEOPARD (LEOGraphicsMod
-      textures) → ringill (assembler). blacksun-SR is NOT an author of this mod — his role is the "Universe" pack
-      source the mod was originally taken from; that provenance is recorded in the acquire route, not the author
-      line. File is UTF-16 LE with BOM.
+      Author ModuleInfo.txt in mod/, verified at runtime against these sources: NO Dependence line — the mod
+      no longer relies on a separately-installed LEOGraphicsMod, because the panel's FormStarMap textures are
+      now bundled into mod/Data/FormStarMap/ and served by this mod's own CacheData (Bm.FormStarMap block; see
+      the decouple step below). Section=Разное/SectionEng=Miscellaneous, Priority=1, Languages=Rus,Eng, and
+      Rus/Eng descriptions. Author lists the actual authors of this mod: Huk (author of AMod_Spacejunk, per
+      museum ModuleInfo.txt) → denballakh (published Space-Rangers-Mods-Sources, our merge base) → LEOPARD
+      (LEOGraphicsMod textures, now vendored into this mod) → ringill (assembler). blacksun-SR is NOT an author
+      of this mod — his role is the "Universe" pack source the mod was originally taken from; that provenance is
+      recorded in the acquire route, not the author line. File is UTF-16 LE with BOM.
     command: |
       Name=AMod_Spacejunk
       Author=LEOPARD, Huk, denballakh, ringill
       Conflict=
-      Dependence=LEOGraphicsMod
       Priority=1
       Section=Разное
       SectionEng=Miscellaneous
@@ -235,13 +238,25 @@ acquire:
       FullDescriptionEng=A viewing panel is added to the space form, showing which item is located and where in the system
     date: 2026-08-22
 
-  # pending — pull the needed LEO graphics assets into mod/
-  - ref: https://github.com/space-rangers-mods-museum/LEOGraphicsMod/releases/tag/v1.0.0
+  # decouple — drop the LEOGraphicsMod runtime dependency by bundling its panel textures
+  - ref: LEOGraphicsMod/src/resources/Data/FormStarMap
     note: >-
-      Select and copy only the LEOGraphicsMod assets actually needed by the Spacejunk panel from src/resources into mod/ CFG/ and Data/,
-      then re-verify and repack the merged mod.
-    command: ""
-    date:
+      Remove Dependence=LEOGraphicsMod by vendoring into mod/ the only LEOGraphicsMod assets the panel actually
+      references. The Spacejunk panel's 88 `GI,Bm.*` texture refs resolve to 14 logical names — Bm.FormStarMap.*
+      — that ONLY LEOGraphicsMod provided (its CacheData maps them to DATA\FormStarMap\*.gi). Removing the
+      dependency without bundling them would break the panel (missing textures). Decouple = copy those 14 .gi
+      from LEOGraphicsMod/src/resources/Data/FormStarMap/ into mod/Data/FormStarMap/, map the same 14 logical
+      names in this mod's own CacheData (new Bm.FormStarMap block in src/CacheData_spacejunk.txt, game-root-
+      relative paths Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\<name>.gi, matching the working .scr
+      route), and drop Dependence=LEOGraphicsMod from ModuleInfo (build_spacejunk.py MODULEINFO). The remaining
+      Bm.FormCount2.* refs (2AddD/N/A, 2SubD/N/A) are base-game textures — no action. build_spacejunk.py now
+      fails fast if any of the 14 .gi are missing (check_textures). Excluded from LEO's FormStarMap dir (not
+      needed): ClosedPanel.gi, sjPanelCenterOld.gi, OpenedPanelOld.gi. After this step the mod is fully
+      standalone; LEOGraphicsMod is no longer required at runtime.
+    command: >-
+      powershell -NoProfile -Command "Copy-Item ..\LEOGraphicsMod\src\resources\Data\FormStarMap\ItemCenterA.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\ItemCenterD.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\ItemCenterN.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\OpenedPanel.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\OpenedPanelButton.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageLeftA.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageLeftD.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageLeftH.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageLeftN.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageRightA.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageRightD.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageRightH.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPageRightN.gi,..\LEOGraphicsMod\src\resources\Data\FormStarMap\sjPanelCenter.gi -Destination mod\Data\FormStarMap"
+      && ..\..\.venv\Scripts\python.exe build_spacejunk.py
+    date: 2026-08-22
 
 # internal — museum exhibits this mod is forked from
 based_on:

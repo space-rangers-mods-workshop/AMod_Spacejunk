@@ -18,7 +18,7 @@ Data/Script + CacheData + compiled .scr, InitCode (which sets sjMainPanel
 Active=True) never runs and the panel stays invisible.
 
 Layout produced (conventions taken from installed game reference mods):
-  mod/ModuleInfo.txt            UTF-16 LE BOM, Dependence=LEOGraphicsMod
+  mod/ModuleInfo.txt            UTF-16 LE BOM (no Dependence; panel textures bundled)
   mod/CFG/Main.dat              from src/Main_spacejunk.txt  fmt=HDMain  unsigned
   mod/CFG/CacheData.dat         from src/CacheData_spacejunk.txt fmt=HDCache  unsigned
   mod/CFG/Rus/Lang.dat          from src/Lang_spacejunk.txt  fmt=HDMain  signed
@@ -44,11 +44,30 @@ CFG = MOD / "CFG"
 RUS = CFG / "Rus"
 ENG = CFG / "Eng"
 SCRIPT = MOD / "Data" / "Script" / "mod_spacejunk.scr"
+TEXTURES = MOD / "Data" / "FormStarMap"
+
+# The 14 FormStarMap .gi the panel references (Bm.FormStarMap.*) — bundled into
+# this mod so it no longer depends on LEOGraphicsMod providing them.
+PANEL_GI = [
+    "ItemCenterA.gi",
+    "ItemCenterD.gi",
+    "ItemCenterN.gi",
+    "OpenedPanel.gi",
+    "OpenedPanelButton.gi",
+    "sjPageLeftA.gi",
+    "sjPageLeftD.gi",
+    "sjPageLeftH.gi",
+    "sjPageLeftN.gi",
+    "sjPageRightA.gi",
+    "sjPageRightD.gi",
+    "sjPageRightH.gi",
+    "sjPageRightN.gi",
+    "sjPanelCenter.gi",
+]
 
 MODULEINFO = """Name=AMod_Spacejunk
 Author=LEOPARD, Huk, denballakh, ringill
 Conflict=
-Dependence=LEOGraphicsMod
 Priority=1
 Section=Разное
 SectionEng=Miscellaneous
@@ -109,6 +128,19 @@ def check_scr():
     print(f"scr present: {SCRIPT} ({SCRIPT.stat().st_size} bytes)")
 
 
+def check_textures():
+    missing = [name for name in PANEL_GI if not (TEXTURES / name).exists()]
+    if missing:
+        print(
+            "ERROR: missing bundled panel textures in mod/Data/FormStarMap/:\n  "
+            + "\n  ".join(missing)
+            + "\n  copy them from LEOGraphicsMod/src/resources/Data/FormStarMap/.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    print(f"textures present: {len(PANEL_GI)} FormStarMap .gi in mod/Data/FormStarMap/")
+
+
 def main():
     # sanity: sources exist
     for name in ["Main_spacejunk.txt", "Lang_spacejunk.txt", "CacheData_spacejunk.txt"]:
@@ -117,6 +149,7 @@ def main():
             sys.exit(1)
 
     check_scr()
+    check_textures()
     write_module_info()
     encode("Main_spacejunk.txt", "CFG/Main.dat", "HDMain", False)
     encode("CacheData_spacejunk.txt", "CFG/CacheData.dat", "HDCache", False)
