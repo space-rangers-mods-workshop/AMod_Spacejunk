@@ -255,8 +255,8 @@ acquire:
       Languages=Rus,Eng
       SmallDescription=На форме космоса добавляется панелька-смотрелка, показывающая какой предмет и где лежит в системе
       SmallDescriptionEng=Spacejunk viewer panel
-      FullDescription=На форме космоса добавляется панелька-смотрелка, показывающая какой предмет и где лежит в системе
-      FullDescriptionEng=A viewing panel is added to the space form, showing which item is located and where in the system
+      FullDescription=Панель-обозреватель объектов текущей системы на форме космоса (звёздной карте). Два режима — предметы и корабли (переключаются кнопками). Предметы: имя, раса, тех. уровень (TL), цена, вес, расстояние; сортировка по цене, типу, TL, цене/весу, весу и особому свойству (акрину). Корабли: имя, раса, расстояние, HP/вместимость корпуса; сортировка по HP, типу и расстоянию; корабль игрока исключён. Раса отображается цветным маркером (в т.ч. подрасы клингов, пиратские кланы, пользовательские фракции). Постраничный просмотр до 200 объектов. Кнопка центрирует карту на выбранном объекте
+      FullDescriptionEng=An object viewer panel on the star map showing all items and ships in the current system. Two modes — items and ships (toggle buttons). Items: name, race, tech level (TL), price, weight, distance; sortable by price, type, TL, price/weight, weight, and special (acrin) property. Ships: name, race, distance, HP/hull size; sortable by HP, type, and distance; the player's ship is excluded. Race is shown as a colored marker (incl. Kling subraces, pirate clans, custom factions). Paged viewing of up to 200 objects. A button centers the map on the selected object
     date: 2026-08-22
 
 # internal — museum exhibits this mod is forked from
