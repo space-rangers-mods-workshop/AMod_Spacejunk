@@ -38,8 +38,6 @@ based_on:
 * [`mod/`](mod/) — the assembled, ready-to-deploy mod folder (/Mods/Miscellaneous/AMod_Spacejunk)
 * [`src/`](src/) — the readable sources
 
-
-
 ---
 
 ## ⚖️ License
@@ -49,6 +47,15 @@ based_on:
 **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0).**
 
 You are free to share and adapt it, provided you give credit to the authors, do not use it commercially, and release your derivative under the same license. For a mod derived from museum exhibits, that credit includes the original exhibit authors and a link back to the preserved originals. See [LICENSE](LICENSE) for the full license text.
+
+---
+
+## 🧬 Mod evolution
+
+- LEOPARD drew the images
+- Huk made it possible to quickly find items ejected into space
+- denballakh added the ability to quickly find ships (in addition to items)
+- ringill added support for the English version; removed the dependency on LEOGraphicsMod
 
 ---
 
