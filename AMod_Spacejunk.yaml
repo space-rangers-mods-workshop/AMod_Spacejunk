@@ -139,6 +139,29 @@ acquire:
     command: ""
     date: 2026-08-22
 
+  # fix — language-neutral on-screen markers (decyrillicize the table words)
+  - ref: Lang_spacejunk.txt
+    note: >-
+      Replace the on-screen table words with distinct colored Latin markers so ONE source serves both
+      Rus/Eng Lang.dat (Eng is a byte-identical copy of Rus). SRHD has no inline-icon tag, so a colored
+      literal `<color=R,G,B>marker</color>` is the only text-based language-neutral fallback (same scheme
+      as the existing RaceColors/TLColors). Applied via a byte-level cp1251 patch (decode cp1251 →
+      ASCII-only edits → encode cp1251) with exact-count asserts. This also re-applies the `' т'`→`' t'`
+      tons-unit edit — the script is the COMPLETE reproducible record of the decyrillic changes.
+      Table words → markers (≤3 chars, no brackets, 10 unique RGB):
+        цена→cst(255,255,255) · тип→typ(170,170,170) · ТУ→lvl(0,255,255) ·
+        цена/<br>вес→c/w(255,160,50) · вес→wgt(130,180,255) · акрин→acr(220,175,90) ·
+        расстояние→dst(110,130,150) · ХП→hp(0,220,0) · предметы→itm(180,255,220) · кор→shp(180,150,255)
+      Gotchas: `Description=тип` occurs twice (Items.SortKey.1 + Ships.SortKey.1) → count=2;
+      `Description=цена` is a substring of `Description=цена/<br>вес`, so anchor it by end-of-line.
+      Reproduce: run `patches/decyrillic.py` on a FRESH copy of denballakh's original src/
+      Lang_spacejunk.txt (after `patches/strip_sft_comments.py`), then rebuild (build step below).
+      On the already-fixed committed src/ its count asserts fail by design — it is a reproducibility
+      record, not a re-runnable now (same contract as patch_readback.py).
+    command: >-
+      ..\..\.venv\Scripts\python.exe patches\decyrillic.py
+    date: 2026-08-22
+
   # build the CURRENT variant via SRHD-XenoModKit — compile stub .scr, assemble mod/
   - ref: build_spacejunk.py
     note: >-

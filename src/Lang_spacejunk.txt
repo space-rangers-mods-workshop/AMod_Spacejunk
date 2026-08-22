@@ -288,41 +288,41 @@ Script ~{
                     0=ArraySort(sort_key_array, itemArray);
                     0=free(sort_key_array);
                 }
-                TypeDescription=предметы
+                TypeDescription=<color=180,255,220>itm</color>
                 SortKey ~{
                     Count=6
                     0 ~{
-                        Description=цена
+                        Description=<color=255,255,255>cst</color>
                         Code ~{
                             0=int result = -ItemCost(object);
                         }
                     }
                     1 ~{
-                        Description=тип
+                        Description=<color=170,170,170>typ</color>
                         Code ~{
                             0=int result = -ItemType(object);
                         }
                     }
                     2 ~{
-                        Description=ТУ
+                        Description=<color=0,255,255>lvl</color>
                         Code ~{
                             0=int result = -ItemLevel(object);
                         }
                     }
                     3 ~{
-                        Description=цена/<br>вес
+                        Description=<color=255,160,50>c/w</color>
                         Code ~{
                             0=int result = -(1000 * ItemCost(object)) / (ItemSize(object) + 1);
                         }
                     }
                     4 ~{
-                        Description=вес
+                        Description=<color=130,180,255>wgt</color>
                         Code ~{
                             0=int result = -ItemSize(object);
                         }
                     }
                     5 ~{
-                        Description=акрин
+                        Description=<color=220,175,90>acr</color>
                         Code ~{
                             0=int result = EqSpecial(object);
                         }
@@ -341,7 +341,7 @@ Script ~{
                             0=name = substr(DeleteTags(name), 0, 20) + '...';
                         }
                         0=cost = ''+ItemCost(object)+' cr.';
-                        0=size = ''+ItemSize(object)+' т';
+                        0=size = ''+ItemSize(object)+' t';
                         0=dist = '<color=100,100,100>('+Dist(Player(), object)+')</color>';
                         0=TL = ExecuteCodeFromString(GenerateCodeStringFromBlock(path+'Utils.ItemTechLevel'), 'item', object, 'result');
                         0=race = ExecuteCodeFromString(GenerateCodeStringFromBlock(path+'Utils.RaceString'), 'item', object, 'result');
@@ -378,23 +378,23 @@ Script ~{
                     0=ArraySort(sort_key_array, itemArray);
                     0=free(sort_key_array);
                 }
-                TypeDescription=кор
+                TypeDescription=<color=180,150,255>shp</color>
                 SortKey ~{
                     Count=3
                     0 ~{
-                        Description=ХП
+                        Description=<color=0,220,0>hp</color>
                         Code ~{
                             0=int result = -HullHP(ShipItems(object,0));
                         }
                     }
                     1 ~{
-                        Description=тип
+                        Description=<color=170,170,170>typ</color>
                         Code ~{
                             0=int result = -ShipType(object);
                         }
                     }
                     2 ~{
-                        Description=расстояние
+                        Description=<color=110,130,150>dst</color>
                         Code ~{
                             0=int result = Dist(object, Player());
                         }
