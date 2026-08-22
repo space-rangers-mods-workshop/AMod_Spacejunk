@@ -36,6 +36,7 @@ import sys
 from pathlib import Path
 
 import rangers.dat as d
+import yaml
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
@@ -65,29 +66,52 @@ PANEL_GI = [
     "sjPanelCenter.gi",
 ]
 
-MODULEINFO = """Name=AMod_Spacejunk
-Author=LEOPARD, Huk, denballakh, ringill
-Conflict=
-Priority=1
-Section=Разное
-SectionEng=Miscellaneous
-Languages=Rus,Eng
-SmallDescription=На форме космоса добавляется панелька-смотрелка, показывающая какой предмет и где лежит в системе
-SmallDescriptionEng=Spacejunk viewer panel
-FullDescription=Панель-обозреватель объектов текущей системы на форме космоса (звёздной карте). Два режима — предметы и корабли (переключаются кнопками). Предметы: имя, раса, тех. уровень (TL), цена, вес, расстояние; сортировка по цене, типу, TL, цене/весу, весу и особому свойству (акрину). Корабли: имя, раса, расстояние, HP/вместимость корпуса; сортировка по HP, типу и расстоянию; корабль игрока исключён. Раса отображается цветным маркером (в т.ч. подрасы клингов, пиратские кланы, пользовательские фракции). Постраничный просмотр до 200 объектов. Кнопка центрирует карту на выбранном объекте
-FullDescriptionEng=An object viewer panel on the star map showing all items and ships in the current system. Two modes — items and ships (toggle buttons). Items: name, race, tech level (TL), price, weight, distance; sortable by price, type, TL, price/weight, weight, and special (acrin) property. Ships: name, race, distance, HP/hull size; sortable by HP, type, and distance; the player's ship is excluded. Race is shown as a colored marker (incl. Kling subraces, pirate clans, custom factions). Paged viewing of up to 200 objects. A button centers the map on the selected object
-"""
+YAML_PATH = ROOT / "AMod_Spacejunk.yaml"
+
+
+def build_module_info(mod: str, info: dict) -> str:
+    """Render ModuleInfo.txt content from the mod YAML ``info`` block.
+
+    The ``info`` keys mirror ModuleInfo.txt exactly (Name, Author, Conflict,
+    Priority, Section, SectionEng, Languages, SmallDescription,
+    SmallDescriptionEng, FullDescription, FullDescriptionEng); ``Name`` falls
+    back to the top-level ``mod`` key.
+    """
+
+    def val(key):
+        v = info.get(key)
+        return "" if v is None else str(v)
+
+    pairs = [
+        ("Name", val("Name") or mod),
+        ("Author", val("Author")),
+        ("Conflict", val("Conflict")),
+        ("Priority", val("Priority")),
+        ("Section", val("Section")),
+        ("SectionEng", val("SectionEng")),
+        ("Languages", val("Languages")),
+        ("SmallDescription", val("SmallDescription")),
+        ("SmallDescriptionEng", val("SmallDescriptionEng")),
+        ("FullDescription", val("FullDescription")),
+        ("FullDescriptionEng", val("FullDescriptionEng")),
+    ]
+    return "\n".join(f"{key}={value}" for key, value in pairs)
 
 
 def write_module_info():
     CFG.mkdir(parents=True, exist_ok=True)
     RUS.mkdir(parents=True, exist_ok=True)
     ENG.mkdir(parents=True, exist_ok=True)
+    with open(YAML_PATH, encoding="utf-8") as fh:
+        data = yaml.safe_load(fh)
+    mod = (data.get("mod") or "").strip()
+    info = data.get("info") or {}
+    module_info = build_module_info(mod, info)
     # UTF-16 LE with BOM
     (MOD / "ModuleInfo.txt").write_bytes(
-        b"\xff\xfe" + MODULEINFO.encode("utf-16-le")
+        b"\xff\xfe" + module_info.encode("utf-16-le")
     )
-    print("wrote mod/ModuleInfo.txt (UTF-16 LE BOM,", len(MODULEINFO), "chars)")
+    print("wrote mod/ModuleInfo.txt (UTF-16 LE BOM,", len(module_info), "chars)")
 
 
 def read_source_text(src):

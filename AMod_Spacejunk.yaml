@@ -1,12 +1,43 @@
 mod: AMod_Spacejunk
 
-# public — rendered in the card README.md
+# public — keys match ModuleInfo.txt; rendered into ModuleInfo.txt (build_spacejunk.py)
+# and the card README.md (generate_card.py)
 info:
-  name: AMod_Spacejunk
-  author: "LEOPARD, Huk, denballakh, ringill"
-  summary: Spacejunk viewer panel
-  description: >-
-    A viewing panel is added to the space form, showing which item is located and where in the system
+  Name: AMod_Spacejunk
+  Author: "LEOPARD, Huk, denballakh, ringill"
+  Conflict: ""
+  Priority: 1
+  Section: Разное
+  SectionEng: Miscellaneous
+  Languages: Rus,Eng
+  SmallDescription: На форме космоса добавляется панелька-смотрелка, показывающая какой предмет и где лежит в системе
+  SmallDescriptionEng: Spacejunk viewer panel
+  FullDescription: >-
+    Панель-обозреватель объектов текущей системы на форме космоса (звёздной карте). Два режима —
+    предметы и корабли (переключаются кнопками). Предметы: имя, раса, тех. уровень (TL), цена, вес,
+    расстояние; сортировка по цене, типу, TL, цене/весу, весу и особому свойству (акрину). Корабли:
+    имя, раса, расстояние, HP/вместимость корпуса; сортировка по HP, типу и расстоянию; корабль игрока
+    исключён. Раса отображается цветным маркером (в т.ч. подрасы клингов, пиратские кланы, пользовательские
+    фракции). Постраничный просмотр до 200 объектов. Кнопка центрирует карту на выбранном объекте
+  FullDescriptionEng: >-
+    An object viewer panel on the star map showing all items and ships in the current system.
+    Two modes — items and ships (toggle buttons). Items: name, race, tech level (TL), price,
+    weight, distance; sortable by price, type, TL, price/weight, weight, and special (acrin)
+    property. Ships: name, race, distance, HP/hull size; sortable by HP, type, and distance;
+    the player's ship is excluded. Race is shown as a colored marker (incl. Kling subraces,
+    pirate clans, custom factions). Paged viewing of up to 200 objects. A button centers the
+    map on the selected object.
+  # Nexus Mods page URL, rendered in the card README.md (empty = point hidden)
+  nexusmods: "https://www.nexusmods.com/spacerangersawarapart/mods/58"
+
+# public — the sources this mod is based on / derived from, rendered in the card README.md
+based_on:
+  - source: 🏛️ https://github.com/space-rangers-mods-museum/AMod_Spacejunk
+    note: AMod_Spacejunk - Huk version
+  - source: 🏛️ https://github.com/space-rangers-mods-museum/LEOGraphicsMod
+    note: LEOGraphicsMod - resources
+  - source: https://github.com/denballakh/Space-Rangers-Mods-Sources/tree/master/AnotherMods/AMod_Spacejunk
+    note: AMod_Spacejunk - denballakh version
 
 # public — how the readable sources were produced, rendered in the card README.md
 # base sources come from denballakh's Space-Rangers-Mods-Sources repo (local clone, no network fetch);
@@ -192,7 +223,8 @@ acquire:
       from LEOGraphicsMod/src/resources/Data/FormStarMap/ into mod/Data/FormStarMap/, map the same 14 logical
       names in this mod's own CacheData (new Bm.FormStarMap block in src/CacheData_spacejunk.txt, game-root-
       relative paths Mods\Miscellaneous\AMod_Spacejunk\DATA\FormStarMap\<name>.gi, matching the working .scr
-      route), and drop Dependence=LEOGraphicsMod from ModuleInfo (build_spacejunk.py MODULEINFO). This step runs
+      route), and drop Dependence=LEOGraphicsMod from ModuleInfo (no Dependence field is emitted — build_spacejunk.py
+      renders ModuleInfo from this YAML's info block). This step runs
       BEFORE the build so the build's check_textures() (which fails fast if any of the 14 .gi are missing) passes.
       The remaining Bm.FormCount2.* refs (2AddD/N/A, 2SubD/N/A) are base-game textures — no action. Excluded from
       LEO's FormStarMap dir (not needed): ClosedPanel.gi, sjPanelCenterOld.gi, OpenedPanelOld.gi. After the build
@@ -235,31 +267,15 @@ acquire:
   # author ModuleInfo.txt for the CURRENT variant — no Dependence (textures bundled)
   - ref: ModuleInfo.txt
     note: >-
-      Author ModuleInfo.txt in mod/ (written by build_spacejunk.py write_module_info from the MODULEINFO
-      constant — this step records that target content), verified at runtime against these sources: NO Dependence
-      line — the mod no longer relies on a separately-installed LEOGraphicsMod, because the panel's FormStarMap
-      textures are now bundled into mod/Data/FormStarMap/ and served by this mod's own CacheData (Bm.FormStarMap
-      block; see the decouple step above). Section=Разное/SectionEng=Miscellaneous, Priority=1, Languages=Rus,Eng,
-      and Rus/Eng descriptions. Author lists the actual authors of this mod: Huk (author of AMod_Spacejunk, per
-      museum ModuleInfo.txt) → denballakh (published Space-Rangers-Mods-Sources, our merge base) → LEOPARD
-      (LEOGraphicsMod textures, now vendored into this mod) → ringill (assembler). blacksun-SR is NOT an author
-      of this mod — his role is the "Universe" pack source the mod was originally taken from; that provenance is
-      recorded in the acquire route, not the author line. File is UTF-16 LE with BOM.
-    command: |
-      Name=AMod_Spacejunk
-      Author=LEOPARD, Huk, denballakh, ringill
-      Conflict=
-      Priority=1
-      Section=Разное
-      SectionEng=Miscellaneous
-      Languages=Rus,Eng
-      SmallDescription=На форме космоса добавляется панелька-смотрелка, показывающая какой предмет и где лежит в системе
-      SmallDescriptionEng=Spacejunk viewer panel
-      FullDescription=Панель-обозреватель объектов текущей системы на форме космоса (звёздной карте). Два режима — предметы и корабли (переключаются кнопками). Предметы: имя, раса, тех. уровень (TL), цена, вес, расстояние; сортировка по цене, типу, TL, цене/весу, весу и особому свойству (акрину). Корабли: имя, раса, расстояние, HP/вместимость корпуса; сортировка по HP, типу и расстоянию; корабль игрока исключён. Раса отображается цветным маркером (в т.ч. подрасы клингов, пиратские кланы, пользовательские фракции). Постраничный просмотр до 200 объектов. Кнопка центрирует карту на выбранном объекте
-      FullDescriptionEng=An object viewer panel on the star map showing all items and ships in the current system. Two modes — items and ships (toggle buttons). Items: name, race, tech level (TL), price, weight, distance; sortable by price, type, TL, price/weight, weight, and special (acrin) property. Ships: name, race, distance, HP/hull size; sortable by HP, type, and distance; the player's ship is excluded. Race is shown as a colored marker (incl. Kling subraces, pirate clans, custom factions). Paged viewing of up to 200 objects. A button centers the map on the selected object
+      ModuleInfo.txt in mod/ is rendered by build_spacejunk.py (write_module_info) from this YAML's info block —
+      the info keys mirror ModuleInfo.txt, so this step is purely documentary, not a separate source. Verified at
+      runtime against these sources: NO Dependence line — the mod no longer relies on a separately-installed
+      LEOGraphicsMod, because the panel's FormStarMap textures are now bundled into mod/Data/FormStarMap/ and
+      served by this mod's own CacheData (Bm.FormStarMap block; see the decouple step above).
+      Section=Разное/SectionEng=Miscellaneous, Priority=1, Languages=Rus,Eng, and Rus/Eng descriptions (all taken
+      from the info block). Author lists the actual authors of this mod: Huk (author of AMod_Spacejunk, per museum
+      ModuleInfo.txt) → denballakh (published Space-Rangers-Mods-Sources, our merge base) → LEOPARD (LEOGraphicsMod
+      textures, now vendored into this mod) → ringill (assembler). blacksun-SR is NOT an author of this mod — his
+      role is the "Universe" pack source the mod was originally taken from; that provenance is recorded in the
+      acquire route, not the author line. File is UTF-16 LE with BOM.
     date: 2026-08-22
-
-# internal — museum exhibits this mod is forked from
-based_on:
-  - museum_mod: LEOGraphicsMod
-    museum_release: v1.0.0
