@@ -1,0 +1,9 @@
+# build/package artifacts
+*.zip
+*.log
+
+# one-off throwaway artifacts: intermediate lang dumps, decomp fragments,
+# and the already-applied byte-level patch scripts (their effect is
+# documented in AMod_Spacejunk.yaml acquire steps and workshop/finds.md)
+tmp/
+tmp_patch_readback.py
