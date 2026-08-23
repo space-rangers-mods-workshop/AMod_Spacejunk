@@ -28,7 +28,7 @@ info:
     pirate clans, custom factions). Paged viewing of up to 200 objects. A button centers the
     map on the selected object.
   # Nexus Mods page URL, rendered in the card README.md (empty = point hidden)
-  nexusmods: "https://www.nexusmods.com/spacerangersawarapart/mods/58"
+  nexusmods: "https://www.nexusmods.com/games/spacerangersawarapart/mods/59"
 
 # public — the sources this mod is based on / derived from, rendered in the card README.md
 based_on:

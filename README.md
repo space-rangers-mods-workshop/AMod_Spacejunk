@@ -33,7 +33,7 @@ based_on:
 
 ## 📁 Mod files
 
-* [nexusmods](https://www.nexusmods.com/spacerangersawarapart/mods/58) — the mod page on Nexus Mods
+* [nexusmods](https://www.nexusmods.com/games/spacerangersawarapart/mods/59) — the mod page on Nexus Mods
 * [latest release (archive)](https://github.com/space-rangers-mods-workshop/AMod_Spacejunk/releases/latest) — the mod packaged for download
 * [`mod/`](mod/) — the assembled, ready-to-deploy mod folder (/Mods/Miscellaneous/AMod_Spacejunk)
 * [`src/`](src/) — the readable sources
