@@ -33,11 +33,11 @@ info:
 # public — the sources this mod is based on / derived from, rendered in the card README.md
 based_on:
   - source: 🏛️ https://github.com/space-rangers-mods-museum/AMod_Spacejunk
-    note: AMod_Spacejunk - Huk version
+    note: AMod_Spacejunk - Huk
   - source: 🏛️ https://github.com/space-rangers-mods-museum/LEOGraphicsMod
-    note: LEOGraphicsMod - resources
+    note: LEOGraphicsMod - LEOPARD
   - source: https://github.com/denballakh/Space-Rangers-Mods-Sources/tree/master/AnotherMods/AMod_Spacejunk
-    note: AMod_Spacejunk - denballakh version
+    note: AMod_Spacejunk - denballakh
 
 # public — how the readable sources were produced, rendered in the card README.md
 # base sources come from denballakh's Space-Rangers-Mods-Sources repo (local clone, no network fetch);
