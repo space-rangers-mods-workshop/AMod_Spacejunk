@@ -21,7 +21,7 @@ Download the mod with MO2 mod manager and deploy it — the plugin places the mo
 
 ### ✋ Manual
 
-1. Make sure the game loads mods from its `Mods\` folder (this requires the patched `Rangers.exe` — see the game's modding guide).
+1. Make sure the game loads mods from its `Mods\` folder.
 2. Download the latest release archive from the
    [GitHub releases page](https://github.com/space-rangers-mods-workshop/AMod_Spacejunk/releases/latest)
    (or the [Nexus Mods page](https://www.nexusmods.com/spacerangersawarapart/mods/59)).
