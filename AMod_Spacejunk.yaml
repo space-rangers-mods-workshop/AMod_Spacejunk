@@ -240,8 +240,8 @@ acquire:
       ..\..\.venv\Scripts\python.exe build_spacejunk.py
       Layout (conventions from installed game reference mods):
         mod/ModuleInfo.txt          UTF-16 LE BOM (no Dependence; panel textures bundled)
-        mod/CFG/Main.dat            from src/Main_spacejunk.txt  fmt=HDMain  unsigned (has Data.Script header)
-        mod/CFG/CacheData.dat       from src/CacheData_spacejunk.txt fmt=HDCache  unsigned (Bm.FormStarMap +
+        mod/CFG/Main.dat            from src/Main_spacejunk.txt  fmt=HDMain  signed (has Data.Script header)
+        mod/CFG/CacheData.dat       from src/CacheData_spacejunk.txt fmt=HDCache  signed (Bm.FormStarMap +
                                     Script blocks)
         mod/CFG/Rus/Lang.dat        from src/Lang_spacejunk.txt  fmt=HDMain  signed (Script.AMod_Spacejunk logic)
         mod/CFG/Eng/Lang.dat        same content as Rus (Script block is language-independent; ModuleInfo

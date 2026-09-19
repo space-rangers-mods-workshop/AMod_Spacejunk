@@ -19,8 +19,8 @@ Active=True) never runs and the panel stays invisible.
 
 Layout produced (conventions taken from installed game reference mods):
   mod/ModuleInfo.txt            UTF-16 LE BOM (no Dependence; panel textures bundled)
-  mod/CFG/Main.dat              from src/Main_spacejunk.txt  fmt=HDMain  unsigned
-  mod/CFG/CacheData.dat         from src/CacheData_spacejunk.txt fmt=HDCache  unsigned
+  mod/CFG/Main.dat              from src/Main_spacejunk.txt  fmt=HDMain  signed
+  mod/CFG/CacheData.dat         from src/CacheData_spacejunk.txt fmt=HDCache  signed
   mod/CFG/Rus/Lang.dat          from src/Lang_spacejunk.txt  fmt=HDMain  signed
   mod/CFG/Eng/Lang.dat          same content as Rus (Script block is language-independent)
   mod/Data/Script/mod_spacejunk.scr   compiled stub (from Spacejunk.rson)
@@ -175,8 +175,8 @@ def main():
     check_scr()
     check_textures()
     write_module_info()
-    encode("Main_spacejunk.txt", "CFG/Main.dat", "HDMain", False)
-    encode("CacheData_spacejunk.txt", "CFG/CacheData.dat", "HDCache", False)
+    encode("Main_spacejunk.txt", "CFG/Main.dat", "HDMain", True)
+    encode("CacheData_spacejunk.txt", "CFG/CacheData.dat", "HDCache", True)
     encode("Lang_spacejunk.txt", "CFG/Rus/Lang.dat", "HDMain", True)
     # Script.AMod_Spacejunk is the engine code (language-independent) and lives
     # in Lang.dat, which SRHD loads per language. Emit Eng too so the script is
